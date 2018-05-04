@@ -42,14 +42,14 @@ class BiLSTM_CRF(nn.Module):
         self.initializer.init_embedding(self.verb_embedder.weight)
         
         self.word_encoder = VanillaRNN(word_vocab_size, word_embedding_dim ,word_hidden_dim, 
-                                     verb_embedding_dim, cap_embedding_dim, input_dropout_p=0)
+                                     verb_embedding_dim, cap_embedding_dim, input_dropout_p=0.)
         
         if pretrained is not None:
             self.word_encoder.embedding.weight = nn.Parameter(torch.FloatTensor(pretrained))
             
         self.initializer.init_lstm(self.word_encoder.rnn)
         
-        self.decoder = DecoderCRF(word_hidden_dim*2, self.tag_to_ix, input_dropout_p=0)
+        self.decoder = DecoderCRF(word_hidden_dim*2, self.tag_to_ix, input_dropout_p=0.)
         self.initializer.init_linear(self.decoder.hidden2tag)
         
     def forward(self, words, tags, verbs, caps, wordslen, tagsmask, usecuda=True):

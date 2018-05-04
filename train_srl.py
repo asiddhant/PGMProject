@@ -13,7 +13,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--dataset', action='store', dest='dataset', default='conll12srl', type=str,
+parser.add_argument('--dataset', action='store', dest='dataset', default='conll12', type=str,
                     help='Dataset to be Used')
 parser.add_argument('--result_path', action='store', dest='result_path', default='neural_srl/results/',
                     type=str, help='Path to Save/Load Result')
@@ -27,7 +27,7 @@ parser.add_argument('--reload', default=0, type=int, dest='reload',
                     help="Reload the last saved model")
 parser.add_argument('--checkpoint', default=".", type=str, dest='checkpoint',
                     help="Location of trained Model")
-parser.add_argument('--num_epochs', default=20, type=int, dest='num_epochs',
+parser.add_argument('--num_epochs', default=50, type=int, dest='num_epochs',
                     help="Reload the last saved model")
 
 opt = parser.parse_args()
@@ -63,16 +63,16 @@ elif opt.usemodel == 'BiLSTM_CRF' and opt.dataset == 'scisrl':
     parameters['cpdim'] = 0
     
     parameters['lrate'] = 1.0
-    parameters['batch_size'] = 80
+    parameters['batch_size'] = 40
     
 elif opt.usemodel == 'BiLSTM_CRF' and opt.dataset == 'pbsent':
     parameters['dpout'] = 0.5
-    parameters['wldim'] = 300
+    parameters['wldim'] = 100
     parameters['vbdim'] = 100
     parameters['cpdim'] = 0
     
     parameters['lrate'] = 1.0
-    parameters['batch_size'] = 80
+    parameters['batch_size'] = 10
     
 else:
     raise NotImplementedError()
@@ -93,10 +93,14 @@ if not os.path.exists(result_path):
 if not os.path.exists(os.path.join(result_path,model_name)):
     os.makedirs(os.path.join(result_path,model_name))
 
-if opt.dataset == 'conll12srl':
+if opt.dataset == 'conll12':
     train_data, dev_data, test_data, mappings = loader.load_conll12(dataset_path, parameters)
-elif opt.dataset == 'conll05srl':
+elif opt.dataset == 'conll05':
     train_data, dev_data, test_data, mappings = loader.load_conll05(dataset_path, parameters)
+elif opt.dataset == 'scisrl':
+    train_data, dev_data, test_data, mappings = loader.load_scisrl(dataset_path, parameters)
+elif opt.dataset == 'pbsent':
+    train_data, dev_data, test_data, mappings = loader.load_pbsent(dataset_path, parameters)
 else:
     raise NotImplementedError()
 

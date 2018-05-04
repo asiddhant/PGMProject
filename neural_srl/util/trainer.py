@@ -28,7 +28,7 @@ class Trainer(object):
             param_group['lr'] = lr
             
     def train_model(self, num_epochs, train_data, dev_data, test_data, learning_rate, 
-                    checkpoint_folder='.', eval_train=True, plot_every=100, adjust_lr=False, 
+                    checkpoint_folder='.', eval_train=True, plot_every=50, adjust_lr=False, 
                     batch_size = 80):
 
         losses = []
