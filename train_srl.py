@@ -74,6 +74,15 @@ elif opt.usemodel == 'BiLSTM_CRF' and opt.dataset == 'pbsent':
     parameters['lrate'] = 1.0
     parameters['batch_size'] = 10
     
+elif opt.usemodel == 'BiLSTM_CRF' and opt.dataset == 'pbpara':
+    parameters['dpout'] = 0.5
+    parameters['wldim'] = 100
+    parameters['vbdim'] = 100
+    parameters['cpdim'] = 0
+    
+    parameters['lrate'] = 1.0
+    parameters['batch_size'] = 10
+    
 else:
     raise NotImplementedError()
 
@@ -101,6 +110,8 @@ elif opt.dataset == 'scisrl':
     train_data, dev_data, test_data, mappings = loader.load_scisrl(dataset_path, parameters)
 elif opt.dataset == 'pbsent':
     train_data, dev_data, test_data, mappings = loader.load_pbsent(dataset_path, parameters)
+elif opt.dataset == 'pbpara':
+    train_data, dev_data, test_data, mappings = loader.load_pbpara(dataset_path, parameters)
 else:
     raise NotImplementedError()
 
