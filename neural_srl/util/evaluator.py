@@ -14,7 +14,7 @@ class Evaluator(object):
         self.usecuda = usecuda
 
     def evaluate_ner(self, model, dataset, best_F, eval_script='./datasets/conll/conlleval',
-                          checkpoint_folder='.', record_confmat = False, batch_size = 80):
+                          checkpoint_folder='.', record_confmat = False, batch_size = 1):
         
         model.eval()
         

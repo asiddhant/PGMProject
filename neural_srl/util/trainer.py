@@ -74,10 +74,10 @@ class Trainer(object):
                 
                 score = self.model(words, tags, verbs, caps, wordslen, mask, usecuda=self.usecuda)
                 
-                loss += score.data[0]/np.sum(data['wordslen'])
+                loss += score.data.cpu().numpy()/np.sum(data['wordslen'])
                 score.backward()
                 
-                nn.utils.clip_grad_norm(self.model.parameters(), 1.0)
+                nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
                 self.optimizer.step()
                 
                 count += 1
